@@ -1,5 +1,4 @@
 package org.insa.graphes.model;
-
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
