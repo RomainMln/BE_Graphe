@@ -1,5 +1,4 @@
 package org.insa.graphs.algorithm.utils;
-
 import java.util.ArrayList;
 
 /**
@@ -138,6 +137,14 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
     @Override
     public void remove(E x) throws ElementNotFoundException {
         // TODO:
+    	int index = this.array.indexOf(x);
+    	if(index==-1 | index>=this.currentSize) {
+    		throw (new ElementNotFoundException(x));
+    	}
+    	E lastItem = this.array.get(--this.currentSize);
+    	this.arraySet(index, lastItem);
+    	this.percolateDown(index);
+    	this.percolateUp(index);
     }
 
     @Override
