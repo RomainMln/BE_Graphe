@@ -1,4 +1,5 @@
 package org.insa.graphs.gui.simple;
+import java.util.Random;
 import org.insa.graphs.model.io.BinaryPathReader;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -44,10 +45,10 @@ public class Launch {
     }
 
     public static void main(String[] args) throws Exception {
-
+    	int NB_TEST = 100;
         // Visit these directory to see the list of available files on Commetud.
         final String mapName = "/mnt/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/insa.mapgr";
-        final String pathName = "/mnt/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Paths/path_fr31insa_rangueil_r2.path";
+        //final String pathName = "/mnt/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Paths/path_fr31insa_rangueil_r2.path";
 
         // Create a graph reader.
         final GraphReader reader = new BinaryGraphReader(
@@ -55,21 +56,31 @@ public class Launch {
 
         // TODO: Read the graph.
         final Graph graph = reader.read();
-
+        
+        int taille = graph.size();
+        
+        for(int i=0;i<NB_TEST;i++) {
+        	Random r = new Random();
+        	int nb1 = r.nextInt(taille);
+        	int nb2 = r.nextInt(taille);
+        	
+        }
         // Create the drawing:
-        final Drawing drawing = createDrawing();
+        //final Drawing drawing = createDrawing();
 
         // TODO: Draw the graph on the drawing.
-        drawing.drawGraph(graph);
+        //drawing.drawGraph(graph);
         
         // TODO: Create a PathReader.
-        final PathReader pathReader = new BinaryPathReader(new DataInputStream(new FileInputStream(pathName)));
+        //final PathReader pathReader = new BinaryPathReader(new DataInputStream(new FileInputStream(pathName)));
 
         // TODO: Read the path.
-        final Path path = pathReader.readPath(graph);
-
-        // TODO: Draw the path.
-        drawing.drawPath(path);
+        //final Path path = pathReader.readPath(graph);
+        
+        
+        
+        //TODO: Draw the path.
+        //drawing.drawPath(path);
     }
 
 }
