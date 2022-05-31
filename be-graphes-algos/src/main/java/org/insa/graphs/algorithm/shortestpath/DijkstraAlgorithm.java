@@ -1,13 +1,12 @@
 package org.insa.graphs.algorithm.shortestpath;
 import org.insa.graphs.algorithm.utils.BinaryHeap;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import org.insa.graphs.algorithm.AbstractSolution.Status;
 import org.insa.graphs.model.Arc;
 import org.insa.graphs.model.Graph;
-import org.insa.graphs.model.Node;
+
 import org.insa.graphs.model.Path;
 
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
@@ -15,9 +14,16 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     public DijkstraAlgorithm(ShortestPathData data) {
         super(data);
     }
-
+    
+    public Label[] data(int nbNodes, Graph graph, ShortestPathData data) {
+        Label[] Label = new Label[nbNodes];
+        for(int i = 0;i<Label.length;i++) {
+        	Label[i] = new Label(graph.get(i));
+        }
+        return Label;
+    }
     @Override
-    protected ShortestPathSolution doRun() {
+    public ShortestPathSolution doRun() {
         final ShortestPathData data = getInputData();
         boolean set_cost;
         ShortestPathSolution solution = null;
@@ -25,11 +31,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         // TODO:
         BinaryHeap<Label> tas = new BinaryHeap<Label>(); 
         final int nbNodes = graph.size();
-        java.util.List<Node> Nod = graph.getNodes();
-        Label[] Label = new Label[nbNodes];
-        for(int i = 0;i<Label.length;i++) {
-        	Label[i] = new Label(i);
-        }
+        Label[] Label = data(nbNodes,graph,data);
         Arc[] predecessorArcs = new Arc[nbNodes];
         Label[data.getOrigin().getId()].cost = 0.;
         tas.insert(Label[data.getOrigin().getId()]);
@@ -38,9 +40,9 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         while(!fini) { // boucle avec compteur de sommet marqués.
         	Label x = tas.deleteMin();
         	x.mark = true;
-        	notifyNodeMarked(Nod.get(x.current_node));
+        	notifyNodeMarked(x.current_node);
         	
-        	for(Arc successeur : Nod.get(x.current_node).getSuccessors()) {
+        	for(Arc successeur : x.current_node.getSuccessors()) {
                 if (!data.isAllowed(successeur)) {
                     continue;
                 }
